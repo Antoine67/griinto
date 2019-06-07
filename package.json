@@ -1,0 +1,23 @@
+{
+  "name": "griinto",
+  "version": "0.0.1",
+  "description": "Griinto application",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Antoine67/griinto.git"
+  },
+  "author": "Antoine Mohr",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Antoine67/griinto/issues"
+  },
+  "homepage": "https://github.com/Antoine67/griinto#readme",
+  "devDependencies": {
+    "electron": "^5.0.2"
+  }
+}
