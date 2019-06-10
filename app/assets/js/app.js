@@ -3,22 +3,7 @@ const remote = electron.remote;
 const win = remote.getCurrentWindow();
 const { ipcRenderer } = electron;
 
-//Webview loading
-onload = () => {
-	const webview = document.querySelector('webview')
-	
-	const loadstart = () => {
-		enableLoading($("#content-displayer"))
-	}
 
-	const loadstop = () => {
-		stopLoading($("#content-displayer"))
-	}
-
-	webview.addEventListener('did-start-loading', loadstart)
-	webview.addEventListener('did-stop-loading', loadstop)
-}
- 
 	
 $( document ).ready(function() {
 	
@@ -28,7 +13,20 @@ $( document ).ready(function() {
 		let el = $( this );
 		$( ".tab-button" ).removeClass("active");
 		el.addClass("active");
-	  });
+
+		let callback = null;
+		//Which callback call ?
+		switch(el.attr("data-tab")) {
+			case "ftp" :
+				callback = bindFTPContent();
+				break;
+		}
+
+		//Clear content and display new one, and call callback when successfully displayed
+		$("#content-displayer").empty();
+		$("#content-displayer").load("assets/views/" + el.attr("data-tab") + ".html", callback);
+		
+	});
 
 
 

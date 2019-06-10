@@ -19,5 +19,8 @@
   "homepage": "https://github.com/Antoine67/griinto#readme",
   "devDependencies": {
     "electron": "^5.0.2"
+  },
+  "dependencies": {
+    "jsftp": "^2.1.3"
   }
 }

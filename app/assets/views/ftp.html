@@ -1,0 +1,56 @@
+
+
+
+    
+<!-- Button trigger modal -->
+<button type="button" id="ftpConnectionState" class="btn btn-primary" data-toggle="modal" data-target="#ftp-login-modal">
+    Connexion FTP
+</button>
+      
+      <!-- Modal -->
+      <div class="modal fade" id="ftp-login-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Connexion FTP</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+
+                <form class="form-horizontal" id="ftpLoginForm" action="javascript:alert( 'Erreur innatendue' );">
+                    <fieldset>
+                        <!-- Form Name -->
+                        <legend>Connexion FTP</legend>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="control-label" for="ftpServer">Adresse du serveur FTP</label>  
+                            <input id="ftpServer" name="ftpServer" type="text" placeholder="ftp.serveurftp.com" class="form-control input-md" required="">
+                        </div>
+
+                        <!-- Text input-->
+                        <div class="form-group">
+                            <label class="control-label" for="ftpUsername">Identifiant</label>  
+                            <input id="ftpUsername" name="ftpUsername" type="text" placeholder="Identifiant" class="form-control input-md" required="">
+                        </div>
+
+                        <!-- Password input-->
+                        <div class="form-group">
+                        <label class="control-label" for="ftpPassword">Mot de passe</label>
+                            <input id="ftpPassword" name="ftpPassword" type="password" placeholder="Mot de passe" class="form-control input-md" required="">
+                        </div>
+
+                        <!-- Button -->
+                        <div class="form-group" style="text-align: center">
+                            <button id="ftpValidate" name="ftpValidate" class="btn btn-success">Valider</button>
+                        </div>
+
+                    </fieldset>
+                </form>
+
+            </div>
+          </div>
+        </div>
+      </div>

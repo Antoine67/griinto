@@ -10,11 +10,11 @@ html {
 }
 
 #sidebar {
-  overflow: visible;
+    overflow: visible;
     height: calc(100% - 30px);
     width: 160px; 
     position: fixed;
-    /*z-index: 100;*/
+    z-index: 1000;
     top: 0; 
     left: 0;
     background-color: white;
@@ -37,8 +37,7 @@ a:hover {
 
 
 body {
-    margin-left:160px;
-    margin-top:24px;
+    margin-left:160px !important;
 }
 
 #content-displayer {
