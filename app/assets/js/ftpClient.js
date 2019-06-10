@@ -3,25 +3,33 @@ let net = require("net");
 
 let ftpConnection = null;
 let connected = false;
-	
+
+/**
+ * Call to bind HTLM elements functions on "ftp.html" page
+ * Should be called in "app.js"
+ */
 function bindFTPContent() {
-  console.log("there");
+
   $( document ).ready(function() {
 
     //Cancel submit and create jsftp object with passed data
     $("#ftpLoginForm").submit(function(e){
         e.preventDefault();
-        ftpConnection = createFTPConnection();
+        ftpConnection = createFTPConnection(
+          $('#ftpServer').val(),
+          21,
+          $('#ftpUsername').val(),
+          $('#ftpPassword').val()
+          );
         $('#ftp-login-modal').modal('hide');
-        /* listFiles(ftpConnection), ".";*/
     });
   });
   
 };
 
+/* ----- FTP connection ----- */
 
-
-function createFTPConnection(host = "bftp.dlptest.com", port = 21, user = 'dlpuser@dlptest.com', pass = '5p2tvn92R0di8FdiLCfzeeT0b') {
+function createFTPConnection(host, port = 21, user, pass) {
   console.log("Connexion...");
   setButtonState(0);
   const Ftp = new jsftp({
@@ -47,31 +55,24 @@ function closeFTPConnection(ftpConnection) {
       return console.error(err);
     }
   
-    console.log("Disconnected");
+    displayMessage("Déconnecté !",1);
   });
 };
 
-function listFiles(ftpConnection, remoteCWD) {
-  if (!isUserConnected()) {
-    userShouldConnect();
-    return;
-  }
-  ftpConnection.list(remoteCWD, (err, res) => {
-    console.log(res);
-  });
-}
 
 function connectionSuccessful ()  {
-  console.log('connected to server!');
   connected = true;
   setButtonState(1);
+  displayMessage("Connexion réussie !",1);
+  console.log(ftpConnection);
+  $("#connected-to").html("Connecté à <b>"+ftpConnection.host+"</b>");
 };
 
 
 function connectionFailed (err) {
   console.log(err);
   setButtonState(-1);
-  displayError("Erreur lors de la connexion");
+  displayMessage("Erreur lors de la connexion",-1);
 }
 
 function userShouldConnect () {
@@ -84,7 +85,25 @@ function isUserConnected () {
 
 
 /* ----- Display ----- */
-function displayError () {  
+function displayMessage (msg, code=0) {  
+  let el = $('#message-displayer');
+  el.html(msg);
+  el.removeClass("alert-success"); el.removeClass("alert-primary"); el.removeClass("alert-danger"); 
+  switch (code) {
+    case -1:
+      el.addClass("alert-danger"); 
+      break;
+    case 0:
+      el.addClass("alert-primary"); 
+      break;
+    case 1:
+      el.addClass("alert-success"); 
+      break;
+  }
+  el.addClass("alert");
+  el.css('opacity',100);
+  el.show();
+  el.delay(7000).fadeTo(3000, 0); //Display message for 10s
 
 }
 
@@ -106,6 +125,19 @@ function setButtonState (state = -1) {
       el.addClass("btn-success");
       break;
   }
+}
+
+
+/* ----- FTP functions on files / folder ----- */
+
+function listFiles(ftpConnection, remoteCWD) {
+  if (!isUserConnected()) {
+    userShouldConnect();
+    return;
+  }
+  ftpConnection.list(remoteCWD, (err, res) => {
+    return res;
+  });
 }
 
 /*

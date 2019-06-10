@@ -1,12 +1,35 @@
 
 
+<div class="ftp-content-global-div">
+    <div id="top-bar">
+        <div id="connected-to"></div>
 
-    
-<!-- Button trigger modal -->
-<button type="button" id="ftpConnectionState" class="btn btn-primary" data-toggle="modal" data-target="#ftp-login-modal">
-    Connexion FTP
-</button>
-      
+        <!-- Button trigger modal -->
+        <button type="button" id="ftpConnectionState" class="btn btn-primary" data-toggle="modal" data-target="#ftp-login-modal">
+            Connexion FTP
+        </button>
+    </div>
+    <div id="message-displayer"></div>
+        
+    <div id="ftp-files-manager">
+        <table cellspacing="0">
+            <tr>
+                <th class="ftp-title">Local</th>
+                <th class="ftp-title">Serveur distant</th>
+            </tr>
+            <tr>
+                <td id="local-files"></td>
+                <td id="remote-files"></td>
+            </tr>
+        </table> 
+    </div>
+
+
+
+
+
+
+
       <!-- Modal -->
       <div class="modal fade" id="ftp-login-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -24,25 +47,25 @@
                         <!-- Form Name -->
                         <legend>Connexion FTP</legend>
 
-                        <!-- Text input-->
+                        <!-- Address input-->
                         <div class="form-group">
                             <label class="control-label" for="ftpServer">Adresse du serveur FTP</label>  
-                            <input id="ftpServer" name="ftpServer" type="text" placeholder="ftp.serveurftp.com" class="form-control input-md" required="">
+                            <input value="ftp.dlptest.com" id="ftpServer" name="ftpServer" type="text" placeholder="ftp.serveurftp.com" class="form-control input-md" required="">
                         </div>
 
-                        <!-- Text input-->
+                        <!-- Username input-->
                         <div class="form-group">
                             <label class="control-label" for="ftpUsername">Identifiant</label>  
-                            <input id="ftpUsername" name="ftpUsername" type="text" placeholder="Identifiant" class="form-control input-md" required="">
+                            <input value="dlpuser@dlptest.com" id="ftpUsername" name="ftpUsername" type="text" placeholder="Identifiant" class="form-control input-md" required="">
                         </div>
 
                         <!-- Password input-->
                         <div class="form-group">
                         <label class="control-label" for="ftpPassword">Mot de passe</label>
-                            <input id="ftpPassword" name="ftpPassword" type="password" placeholder="Mot de passe" class="form-control input-md" required="">
+                            <input value="5p2tvn92R0di8FdiLCfzeeT0b" id="ftpPassword" name="ftpPassword" type="password" placeholder="Mot de passe" class="form-control input-md" required="">
                         </div>
 
-                        <!-- Button -->
+                        <!-- Validation Button -->
                         <div class="form-group" style="text-align: center">
                             <button id="ftpValidate" name="ftpValidate" class="btn btn-success">Valider</button>
                         </div>
@@ -54,3 +77,4 @@
           </div>
         </div>
       </div>
+    </div>

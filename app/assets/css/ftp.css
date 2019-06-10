@@ -1,0 +1,55 @@
+
+/* Top bar */
+#top-bar {
+    height: 50px;
+    width: 100%;
+    padding: 10px;
+}
+#ftpConnectionState {
+    float: right;
+}
+#connected-to {
+    float: left;
+}
+
+
+/* Message displayer*/
+#message-displayer {
+    height: 50px;
+    width: 100%;
+}
+
+.alert {
+    margin: 0;
+}
+
+/* Main div displaying files and folder */
+#ftp-files-manager {
+    height: calc(100vh - 100px);
+    width: 100%;
+    /* overflow-y: scroll; */
+    padding: 10px;
+}
+
+#ftp-files-manager table {
+    height: 100%;
+    width: 100%;
+}
+
+.ftp-title {
+    width: 50%;
+    height: 20px;
+    text-align: center;
+}
+
+#ftp-files-manager > table > tr > th {
+    background-color: violet;
+}
+
+#local-files {
+    background-color: blue;
+}
+
+#remote-files {
+    background-color: red;
+}
