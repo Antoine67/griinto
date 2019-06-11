@@ -1,8 +1,11 @@
 let jsftp = require("jsftp"); /* https://github.com/sergi/jsftp */
 let net = require("net");
+let fs = require("fs");
+var TreeView = require('js-treeview');
 
-let ftpConnection = null;
+var ftpConnection;
 let connected = false;
+let currentFolder = "/";
 
 /**
  * Call to bind HTLM elements functions on "ftp.html" page
@@ -15,12 +18,12 @@ function bindFTPContent() {
     //Cancel submit and create jsftp object with passed data
     $("#ftpLoginForm").submit(function(e){
         e.preventDefault();
-        ftpConnection = createFTPConnection(
+        createFTPConnection(
           $('#ftpServer').val(),
           21,
           $('#ftpUsername').val(),
           $('#ftpPassword').val()
-          );
+        );
         $('#ftp-login-modal').modal('hide');
     });
   });
@@ -30,9 +33,9 @@ function bindFTPContent() {
 /* ----- FTP connection ----- */
 
 function createFTPConnection(host, port = 21, user, pass) {
-  console.log("Connexion...");
   setButtonState(0);
-  const Ftp = new jsftp({
+  $('#remote-files').empty();
+  ftpConnection = new jsftp({
     host: host,
     port: port, // defaults to 21
     user: user, // defaults to "anonymous"
@@ -42,11 +45,28 @@ function createFTPConnection(host, port = 21, user, pass) {
     },
   });
 
-  Ftp.on('error', (err) => connectionFailed(err));
-  Ftp.on('connect', (err) => connectionSuccessful());
+  ftpConnection.on('error', (err) => connectionFailed(err)); //Server not reachable
+  ftpConnection.on('connect', (err) => authentification(host, port, user, pass)); //Server reachable
+  //ftpConnection.on('data', function(data){console.log(data);}) //Debug 
 
-  return Ftp;
 };
+
+function authentification(host, port, user, pass) {
+  connected = false;
+  console.log("Connection to "+host+":"+port+" as '"+user+"' with password : '"+pass+"'");
+
+  ftpConnection.auth(user,pass, (err) => {
+    if(err) {
+      console.log(err);
+      errStr = err.toString();
+      var errorMsg = errStr.substr(0, errStr.indexOf('\n')); 
+      displayMessage(errorMsg, -1);
+    }else {
+      connectionSuccessful();   
+    }
+    
+  });
+}
 
 
 function closeFTPConnection(ftpConnection) {
@@ -64,8 +84,10 @@ function connectionSuccessful ()  {
   connected = true;
   setButtonState(1);
   displayMessage("Connexion réussie !",1);
-  console.log(ftpConnection);
   $("#connected-to").html("Connecté à <b>"+ftpConnection.host+"</b>");
+  fillLocalFiles("/");
+  fillRemoteFiles("/");
+
 };
 
 
@@ -75,9 +97,6 @@ function connectionFailed (err) {
   displayMessage("Erreur lors de la connexion",-1);
 }
 
-function userShouldConnect () {
-
-};
 
 function isUserConnected () {
   return connected;
@@ -140,13 +159,89 @@ function listFiles(ftpConnection, remoteCWD) {
   });
 }
 
-/*
 
-Ftp.raw("mkd", "/new_dir", (err, data) => {
-  if (err) {
-    return console.error(err);
-  }
-  console.log(data.text); // Show the FTP response text to the user
-  console.log(data.code); // Show the FTP response code to the user
-});
-*/
+function fillRemoteFiles(cwd,ftp = ftpConnection) {
+
+  let filesAndFolders = [];
+  ftp.ls(cwd, (err, res) => {
+    console.log(res);
+    res.forEach(function(fileOrFolder) {
+      let type = fileOrFolder.type==1 ? 'folder' : 'file';
+      filesAndFolders.push({ name: fileOrFolder.name , type : type});
+    });
+    createFolderFileView('remote-files',filesAndFolders);
+  });
+
+}
+
+
+
+
+
+/* ----- Local folder functions ----- */
+
+
+function fillLocalFiles(cwd) {
+  
+  let filesAndFolders = [];
+  getAllFilesFromFolder(cwd).forEach(function(fileOrFolder) {
+    filesAndFolders.push({ name: fileOrFolder, type: 'file' })
+  });
+
+  //var tree = new TreeView(filesAndFolders, 'local-files');
+  createFolderFileView('local-files',filesAndFolders);
+
+}
+
+function createFolderFileView(divId, dataArr) {
+  let el = $('#'+divId); el.empty();
+
+  dataArr.forEach(function(fileOrFolder) {
+    let logoClass = !fileOrFolder.type.localeCompare('folder') ? 'far fa-folder' : 'far fa-file';
+    el.append("<div class='folderFile'><i class='folderFileLogo "+logoClass+"'></i><div class='folderFileName'>"+fileOrFolder.name+"</div></div>");
+  });
+
+}
+
+
+
+
+function getAllFilesFromFolder (dir) {
+
+  let results = [];
+
+  fs.readdirSync(dir).forEach(function(file) {
+
+      path = dir+" "+file;
+      //var stat = fs.lstatSync(path)
+      /*
+      if (stat && stat.isDirectory()) {
+          results = results.concat(getAllFilesFromFolder(file))
+      } else results.push(file);
+      */
+     results.push(file);
+  });
+
+  return results;
+
+};
+
+
+
+
+
+
+
+
+function createFolder(ftp, cwd, name) {
+  ftp.raw("mkd", cwd+name, (err, data) => {
+    if (err) {
+      return console.error(err);
+    }
+    console.log(data.text); // Show the FTP response text to the user
+    console.log(data.code); // Show the FTP response code to the user
+  });
+}
+
+
+

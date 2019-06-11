@@ -11,7 +11,7 @@
   <link rel="stylesheet" href="assets/css/loading.css" />
 
   <link rel="stylesheet" href="assets/css/ftp.css" />
-
+  <link rel="stylesheet" href="assets/css/libs/treefolder.css" />
 
  </head>
  <body>
@@ -19,17 +19,42 @@
 <section id="sidebar">
   <div id='left-side-menu'>
     <ul>
-       <li ><a class="tab-button active" data-tab="index">Home</a></li>
-       <li class='has-sub'><a data-tab="email" class="tab-button">E-mail</a>
+       <li >
+         <a class="tab-button active" data-tab="index">
+           <span class="tab-icon"><i class="fas fa-home fa-fw"></i></span>
+           Home
+          </a>
+        </li>
+       <li class='has-sub'>
+         <a data-tab="email" class="tab-button">
+           <span class="tab-icon"><i class="fas fa-envelope fa-fw"></i></span>
+           E-mail
+          </a>
           <!-- Eventually subbuttons for tabs
             <ul>
              <li class='last'>??</li> 
           </ul>
           -->
        </li>
-       <li><a class="tab-button" data-tab="ftp">FTP</a></li>
-       <li class='has-sub'><li class='last'><a class="tab-button" data-tab="git">Git</a></li>
-       <li class='last'><a id="app-close"><i class="fas fa-times"></i> Quitter</a></li>
+       <li>
+          <a class="tab-button" data-tab="ftp">
+           <span class="tab-icon"><i class="fas fa-file-upload fa-fw"></i></span>
+           FTP
+          </a>
+       </li>
+       <li class='has-sub'>
+         <a class="tab-button" data-tab="git">
+           <span class="tab-icon"><i class="fab fa-git-alt fa-fw"></i></span>
+           Git
+         </a>
+       </li>
+       
+    </ul>
+  </div>
+  <div id="left-down-side-menu">
+    <ul>
+      <li class='has-sub'><li><a class="tab-button" data-tab="options"><i class="fas fa-tools"></i> Options</a></li>
+      <li class='last'><a id="app-close"><i class="fas fa-times"></i> Quitter</a></li>
     </ul>
   </div>
 </section>

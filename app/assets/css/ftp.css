@@ -46,10 +46,60 @@
     background-color: violet;
 }
 
+
+#local-files,
+#remote-files {
+    vertical-align: top;
+    border:1px solid black;
+    margin:5px;
+    margin-top:0;
+    padding: 3px;
+    height: calc(100% - 30px);
+    max-height: calc(100% - 30px);
+    overflow-y: scroll;
+    width: 100%;
+}
+
 #local-files {
-    background-color: blue;
+   
 }
 
 #remote-files {
-    background-color: red;
+
+}
+
+#local-searchbar,
+#remote-searchbar {
+    height: 30px;
+    border-radius: 2px;
+    width: 100%;
+    margin:5px;
+    margin-bottom: 0;
+}
+
+#local-searchbar {
+
+}
+
+#remote-searchbar {
+
+}
+
+
+
+
+/* Specific folder / files */
+
+.folderFile {
+    width: 100%;
+    height: 20px;
+
+}
+
+.folderFileLogo {
+    width: 20px;
+    height: 20px;
+}
+.folderFileName {
+    display: inline-block;
 }
