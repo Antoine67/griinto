@@ -11,7 +11,7 @@ html {
 
 #sidebar {
     overflow: visible;
-    height: calc(100% - 30px);
+    height: 100%;;
     width: 160px; 
     position: fixed;
     z-index: 1000;
@@ -19,6 +19,8 @@ html {
     left: 0;
     background-color: white;
     padding-top: 20px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    margin:1px;
   }
 
 #sidebar .fas {
@@ -48,6 +50,7 @@ body {
 #content-displayer {
     height: 100vh;
     width: calc(100vw - 160px);
+    padding:7px;
 }
 
 /* Left side menu */
@@ -166,11 +169,11 @@ body {
 }
 #left-side-menu > ul > li:hover,
 #left-down-side-menu > ul > li:hover {
-  border-left: 3px solid #3dbd99;
+  border-left: 3px solid #1f2ac4;
 }
 #left-side-menu ul li:hover > a,
 #left-down-side-menu ul li:hover > a {
-  color: #3dbd99;
+  color: #1f2ac4;
 }
 #left-side-menu > ul > li:hover,
 #left-down-side-menu > ul > li:hover {
@@ -220,6 +223,6 @@ body {
 }*/
 
 .active {
-  background-color: #484a4b;
-  color: #3dbd99 !important;
+  background-color: #cdd0f7;
+  color: #1f2ac4 !important;
 }
